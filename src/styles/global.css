@@ -1,1 +1,63 @@
 @import "tailwindcss";
+
+@theme inline {
+	--font-sans: var(--font-inter), sans-serif;
+}
+
+@theme {
+	/* color */
+	--color-white: hsl(0, 0%, 100%);
+	--color-blue-200: hsl(224, 100%, 95%);
+	--color-blue-400: hsl(220, 100%, 64%);
+	--color-blue-600: hsl(228, 100%, 60%);
+	--color-blue-700: hsl(228, 99%, 58%);
+	--color-black: hsl(0, 0%, 0%);
+
+	--color-border: color-mix(in oklch, var(--color-white) 20%, transparent);
+	--color-text-muted: color-mix(in oklch, var(--color-white) 85%, transparent);
+
+	/* font size */
+	--text-2xs: 0.6875rem;
+	--text-fluid-3xl: clamp(2.5rem, 1.9221rem + 2.4653vw, 3.5rem);
+
+	--spacing-fluid-6-12: clamp(1.5rem, 0.6332rem + 3.6979vw, 3rem);
+}
+
+@layer base {
+	/* reset */
+	html {
+		/* Reserve scrollbar area */
+		scrollbar-gutter: stable;
+		/* Enable smooth scrolling for anchor links */
+		@media (prefers-reduced-motion: no-preference) {
+			scroll-behavior: smooth;
+		}
+		/* Enable keywords animations */
+		interpolate-size: allow-keywords;
+	}
+
+	body {
+		/* Improve text rendering */
+		-webkit-font-smoothing: antialiased;
+		/* hide horizontal overflow */
+		overflow-x: hidden;
+
+		@supports (overflow-x: clip) {
+			overflow-x: clip;
+		}
+	}
+
+	/* improve focus styles */
+	:focus-visible {
+		outline-offset: 3px;
+	}
+
+	/* typography */
+	h1 {
+		@apply font-medium text-fluid-3xl;
+	}
+
+	p {
+		@apply text-[1.0625rem];
+	}
+}
