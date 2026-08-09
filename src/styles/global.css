@@ -22,9 +22,12 @@
 	--text-2xs: 0.6875rem;
 	--text-fluid-3xl: clamp(2.5rem, 1.9221rem + 2.4653vw, 3.5rem);
 
+	/* spacing and sizing */
+	--spacing-fluid-6-10: clamp(1.5rem, 0.9221rem + 2.4653vw, 2.5rem);
 	--spacing-fluid-6-7: clamp(1.5rem, 1.3555rem + 0.6163vw, 1.75rem);
 	--spacing-fluid-6-12: clamp(1.5rem, 0.6332rem + 3.6979vw, 3rem);
 	--spacing-fluid-10-12: clamp(2.5rem, 2.211rem + 1.2326vw, 3rem);
+	--spacing-fluid-12-16\.5: clamp(3rem, 2.3499rem + 2.7734vw, 4.125rem);
 }
 
 @layer base {
@@ -58,11 +61,11 @@
 
 	/* typography */
 	h1 {
-		@apply font-medium text-fluid-3xl;
+		@apply font-medium text-fluid-3xl text-balance leading-fluid-12-16.5;
 	}
 
 	p {
-		@apply text-[1.0625rem];
+		@apply text-[1.0625rem]/7 text-pretty;
 	}
 }
 
