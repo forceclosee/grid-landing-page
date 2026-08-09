@@ -1,0 +1,88 @@
+---
+const listLink = [
+	{
+		href: "/about",
+		text: "About",
+	},
+	{
+		href: "/our-work",
+		text: "Our Work",
+	},
+	{
+		href: "/partners",
+		text: "Partners",
+	},
+	{
+		href: "/annual-report",
+		text: "Annual Report",
+	},
+	{
+		href: "/donate",
+		text: "Donate",
+	},
+];
+---
+
+<header class="border-be border-border">
+	<div
+		class="min-block-18 max-inline-[90rem] flex justify-between items-center mx-auto px-fluid-6-12">
+		<div class="flex items-center gap-1.5">
+			<span
+				class="block block-2.5 inline-2.5 bg-white rounded-full shrink-0"
+				aria-hidden="true"></span>
+			<span class="text-sm">Bridge Collective</span>
+		</div>
+
+		<button
+			type="button"
+			id="menu-button"
+			popovertarget="menu-panel"
+			class="group min-block-11 min-inline-11 flex flex-col justify-center items-center gap-1.5 cursor-pointer shrink-0"
+			aria-expanded="false"
+			aria-controls="menu-panel"
+			aria-label="Open menu">
+			<span
+				class="block-0.5 inline-4.5 bg-white group-[[aria-expanded='true']]:rotate-45 hamburger-transition-timing translate-y-0 group-[[aria-expanded='true']]:translate-y-1"
+				aria-hidden="true"></span>
+			<span
+				class="block-0.5 inline-4.5 bg-white group-[[aria-expanded='true']]:-rotate-45 hamburger-transition-timing translate-y-0 group-[[aria-expanded='true']]:-translate-y-1"
+				aria-hidden="true"></span>
+		</button>
+	</div>
+</header>
+
+<!-- menu panel -->
+<nav
+	id="menu-panel"
+	popover
+	class="inline-full md:max-inline-[24.75rem] inset-bs-[calc(4.5rem_+_1px)] bg-blue-700 backdrop:bg-overlay ms-auto menu-panel-transition">
+	<ul class="gap-2 grid px-12 py-fluid-10-12">
+		{listLink.map((list) => 
+      <li class="block flex justify-center md:justify-end">
+        <a class="inline-block py-1 text-white text-3xl hover-underline" href={list.href}>{list.text}</a>
+      </li>
+    )}
+	</ul>
+</nav>
+
+<script>
+const menuButton = document.querySelector("#menu-button");
+const menuPanel = document.querySelector("#menu-panel");
+const main = document.querySelector("#main");
+const footer = document.querySelector("#footer");
+
+if (menuPanel && menuButton && main && footer) {
+	menuPanel.addEventListener("toggle", (event) => {
+		const e = event as ToggleEvent;
+		const isPopoverOpen = e.newState === "open";
+
+		menuButton.setAttribute("aria-expanded", String(isPopoverOpen));
+		menuButton.setAttribute(
+			"aria-label",
+			isPopoverOpen ? "Close menu" : "Open menu",
+		);
+		main.toggleAttribute("inert", isPopoverOpen);
+		footer.toggleAttribute("inert", isPopoverOpen);
+	});
+}
+</script>

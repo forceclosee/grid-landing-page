@@ -13,6 +13,8 @@
 	--color-blue-700: hsl(228, 99%, 58%);
 	--color-black: hsl(0, 0%, 0%);
 
+	--color-bg-overlay: color-mix(in oklch, var(--color-black) 25%, transparent);
+
 	--color-border: color-mix(in oklch, var(--color-white) 20%, transparent);
 	--color-text-muted: color-mix(in oklch, var(--color-white) 85%, transparent);
 
@@ -20,7 +22,9 @@
 	--text-2xs: 0.6875rem;
 	--text-fluid-3xl: clamp(2.5rem, 1.9221rem + 2.4653vw, 3.5rem);
 
+	--spacing-fluid-6-7: clamp(1.5rem, 1.3555rem + 0.6163vw, 1.75rem);
 	--spacing-fluid-6-12: clamp(1.5rem, 0.6332rem + 3.6979vw, 3rem);
+	--spacing-fluid-10-12: clamp(2.5rem, 2.211rem + 1.2326vw, 3rem);
 }
 
 @layer base {
@@ -59,5 +63,119 @@
 
 	p {
 		@apply text-[1.0625rem];
+	}
+}
+
+@utility bg-overlay {
+	background-image: linear-gradient(
+		to bottom,
+		transparent calc(4.5rem + 1px),
+		var(--color-bg-overlay) calc(4.5rem + 1px)
+	);
+}
+
+@utility hover-underline {
+	background:
+		linear-gradient(currentColor 0 0) bottom / var(--d, 0) 3px no-repeat;
+	transition: 0.5s;
+
+	&:hover {
+		@media (hover: hover) {
+			--d: 100%;
+		}
+	}
+}
+
+@utility hamburger-transition-timing {
+	@media (prefers-reduced-motion: no-preference) {
+		transition:
+			translate 0.5s 0.5s,
+			rotate 0.5s;
+
+		.group[aria-expanded="true"] & {
+			transition:
+				translate 0.5s,
+				rotate 0.5s 0.5s;
+		}
+	}
+}
+
+@utility menu-panel-transition {
+	overflow-y: hidden;
+
+	@supports (overflow-y: clip) {
+		overflow-y: clip;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		block-size: 0;
+		translate: 0 0;
+
+		transition: all 0.5s ease-in allow-discrete;
+
+		@media (width >= 48rem) {
+			block-size: 100%;
+			translate: 100% 0;
+		}
+
+		&:popover-open {
+			block-size: max-content;
+
+			transition: all 0.5s ease-out allow-discrete;
+
+			@media (width >= 48rem) {
+				block-size: 100%;
+				translate: 0 0;
+			}
+
+			@starting-style {
+				block-size: 0;
+				translate: 0 0;
+
+				@media (width >= 48rem) {
+					block-size: 100%;
+					translate: 100% 0;
+				}
+			}
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		opacity: 0;
+		block-size: max-content;
+
+		transition: all 0.4s ease allow-discrete;
+
+		@media (width >= 48rem) {
+			block-size: 100%;
+		}
+
+		&:popover-open {
+			opacity: 1;
+
+			@starting-style {
+				opacity: 0;
+			}
+		}
+	}
+
+	&::backdrop {
+		opacity: 0;
+
+		@media (prefers-reduced-motion: no-preference) {
+			transition: all 0.5s ease allow-discrete;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			transition: all 0.4s ease allow-discrete;
+		}
+	}
+
+	&:popover-open::backdrop {
+		opacity: 1;
+
+		@starting-style {
+			opacity: 0;
+		}
 	}
 }
