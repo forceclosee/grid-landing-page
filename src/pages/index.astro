@@ -1,10 +1,13 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import Hero from "@components/hero/Hero.astro";
 ---
 
 <Layout title="Grid Landing Page | ForceClose">
-	<main id="main">
-		<h1>A classroom</h1>
-		<p>We fund</p>
+	<main
+		id="main"
+		class="inline-full max-inline-[90rem] content-start lg:content-stretch grid lg:grid-cols-[4fr_5fr] mx-auto">
+		<Hero />
+		<div class="border-border border-e">stats</div>
 	</main>
 </Layout>
