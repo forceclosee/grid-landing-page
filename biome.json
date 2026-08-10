@@ -16,10 +16,20 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"preset": "recommended"
+			"preset": "recommended",
+			"correctness": {
+				"noSolidDestructuredProps": "warn"
+			},
+			"performance": {
+				"useSolidForComponent": "warn"
+			},
+			"suspicious": {
+				"noDuplicatedSpreadProps": "on"
+			}
 		},
 		"domains": {
-			"tailwind": "all"
+			"tailwind": "all",
+			"solid": "all"
 		}
 	},
 	"assist": {

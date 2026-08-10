@@ -9,6 +9,8 @@
 			"@layouts/*": ["./src/layouts/*"],
 			"@components/*": ["./src/components/*"],
 			"@db/*": ["./src/db/*"]
-		}
+		},
+		"jsx": "preserve",
+		"jsxImportSource": "solid-js"
 	}
 }
