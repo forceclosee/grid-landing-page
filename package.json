@@ -11,14 +11,21 @@
 		"preview": "astro preview",
 		"astro": "astro",
 		"biome": "biome check",
-		"biome:fix": "biome check --write"
+		"biome:fix": "biome check --write",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "drizzle-kit migrate"
 	},
 	"dependencies": {
+		"@neondatabase/serverless": "^1.1.0",
 		"@tailwindcss/vite": "^4.3.3",
 		"astro": "^7.2.0",
+		"drizzle-orm": "^1.0.0-rc.4",
 		"tailwindcss": "^4.3.3"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.7"
+		"@biomejs/biome": "2.5.7",
+		"@types/node": "^26.2.0",
+		"drizzle-kit": "^1.0.0-rc.4",
+		"tsx": "^4.23.11"
 	}
 }
