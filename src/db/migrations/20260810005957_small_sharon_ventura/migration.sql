@@ -1,0 +1,1 @@
+ALTER TABLE "stats" ALTER COLUMN "stat" SET DATA TYPE real USING "stat"::real;

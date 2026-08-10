@@ -1,0 +1,56 @@
+{
+  "version": "8",
+  "dialect": "postgres",
+  "id": "86d13c59-c5cb-458a-99dc-429004522280",
+  "prevIds": [
+    "92116dce-34b3-4c1c-aecd-bde8bcbd72fe"
+  ],
+  "ddl": [
+    {
+      "isRlsEnabled": false,
+      "name": "stats",
+      "entityType": "tables",
+      "schema": "public"
+    },
+    {
+      "type": "real",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "stat",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "stats"
+    },
+    {
+      "type": "varchar(30)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "name",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "stats"
+    },
+    {
+      "type": "varchar(80)",
+      "typeSchema": null,
+      "notNull": true,
+      "dimensions": 0,
+      "default": null,
+      "generated": null,
+      "identity": null,
+      "name": "description",
+      "entityType": "columns",
+      "schema": "public",
+      "table": "stats"
+    }
+  ],
+  "renames": []
+}
