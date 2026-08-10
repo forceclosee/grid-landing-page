@@ -1,6 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Hero from "@components/hero/Hero.astro";
+import Stats from "@components/stats/Stats";
 ---
 
 <Layout title="Grid Landing Page | ForceClose">
@@ -8,6 +9,6 @@ import Hero from "@components/hero/Hero.astro";
 		id="main"
 		class="inline-full max-inline-[90rem] content-start lg:content-stretch grid lg:grid-cols-[4fr_5fr] mx-auto">
 		<Hero />
-		<div class="border-border border-e">stats</div>
+		<Stats client:load />
 	</main>
 </Layout>
