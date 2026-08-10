@@ -28,4 +28,5 @@ design/
 guide/
 starter-set/
 
-
+# Cloudflare Wrangler local state and builds
+.wrangler/
