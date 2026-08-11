@@ -31,12 +31,12 @@ This is a solution to the [Time tracking dashboard challenge on Frontend Mentor]
 
 <!-- isi screenshot -->
 
-![](./screenshot.jpg)
+![](./public/screenshot.png)
 
 ### Links
 
-- Solution URL: [solution URL](https://your-solution-url.com) <!-- ganti link -->
-- Live Site URL: [live site URL](https://your-live-site-url.com) <!-- ganti link -->
+- Solution URL: [solution URL](https://www.frontendmentor.io/solutions/grid-landing-page-astro-solidjs-tanstack-query-neon-and-drizzle-orm-Vm9TmURF11)
+- Live Site URL: [live site URL](https://grid-landing-page.forceclose.workers.dev/)
 
 ## My process
 
