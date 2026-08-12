@@ -23,7 +23,8 @@ const listLink = [
 ];
 ---
 
-<header class="border-be border-border">
+<header
+	class="sticky inset-bs-0 bg-blue-700 border-be border-border transition-all duration-300 auto-hide-header">
 	<div
 		class="min-block-18 max-inline-[90rem] flex justify-between items-center mx-auto px-fluid-6-12">
 		<div class="flex items-center gap-1.5">
@@ -81,6 +82,7 @@ if (menuPanel && menuButton && main && footer) {
 			"aria-label",
 			isPopoverOpen ? "Close menu" : "Open menu",
 		);
+		document.body.classList.toggle("no-scroll", isPopoverOpen);
 		main.toggleAttribute("inert", isPopoverOpen);
 		footer.toggleAttribute("inert", isPopoverOpen);
 	});

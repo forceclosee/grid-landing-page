@@ -215,3 +215,31 @@
 		--p: 100%;
 	}
 }
+
+@utility no-scroll {
+	overflow-y: hidden;
+
+	@supports (overflow-y: clip) {
+		overflow-y: clip;
+	}
+}
+
+@utility root-scroll {
+	container: root-scroll / scroll-state;
+}
+
+@utility auto-hide-header {
+	/* hide header on scroll down and appear on scroll up for supported browser */
+	/* header will stay sticky for unsupported browser */
+	@supports (container-type: scroll-state) {
+		/* Hide on scroll down */
+		@container root-scroll scroll-state(scrolled: block-end) {
+			translate: 0 -100%;
+		}
+
+		/* Appear on scroll back up */
+		@container root-scroll scroll-state(scrolled: block-start) {
+			translate: 0 0;
+		}
+	}
+}
