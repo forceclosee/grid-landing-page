@@ -4,15 +4,14 @@ import {
 	QueryClientProvider,
 	useQuery,
 } from "@tanstack/solid-query";
-import { Switch, Match, For } from "solid-js";
+import { Switch, Match, For, Index } from "solid-js";
 import type { JSX, Component } from "solid-js";
 import { Plus, Sparkle, ArrowRight, TrendingUp } from "lucide-solid";
 
 import { classList } from "@utils/class-list";
 
 import Card from "./Card";
-
-const queryClient = new QueryClient();
+import CardSkeleton from "@components/loaders/CardSkeleton";
 
 function StatsContent() {
 	const query = useQuery(() => ({
@@ -48,14 +47,14 @@ function StatsContent() {
 	return (
 		<div
 			class={classList(
-				"grid inline-full max-inline-[26rem] mx-auto md:max-inline-[50rem]",
-				query.isSuccess
-					? "md:grid-cols-[1fr_1fr]"
-					: "place-content-center py-8 border-border lg:border-e",
+				"inline-full max-inline-[26rem] md:max-inline-[50rem] grid mx-auto",
+				query.isError
+					? "place-content-center py-8 border-border lg:border-e"
+					: "md:grid-cols-[1fr_1fr]",
 			)}>
 			<Switch>
 				<Match when={query.isPending}>
-					<div class="loader"></div>
+					<Index each={Array(4)}>{() => <CardSkeleton />}</Index>
 				</Match>
 				<Match when={query.isError}>
 					<div class="text-red-300">{query.error?.message}</div>
@@ -77,6 +76,7 @@ function StatsContent() {
 		</div>
 	);
 }
+const queryClient = new QueryClient();
 
 export default function Stats() {
 	return (

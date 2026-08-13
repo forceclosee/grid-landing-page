@@ -247,3 +247,16 @@
 @utility squircle {
 	corner-shape: squircle;
 }
+
+@utility wave {
+	animation: wave 2s linear infinite;
+}
+
+@keyframes wave {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
