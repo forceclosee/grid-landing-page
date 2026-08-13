@@ -57,39 +57,41 @@ During this project, I learned how to build a robust server-client bridge for da
 
 - **Server-Side Database Querying with Drizzle ORM**: I learned how to fetch data securely from Neon database using Drizzle ORM on the server, wrapping it inside an Astro Action to prevent exposing sensitive credentials to the client.
 
-```typescript
-// src/actions/index.ts
-export const server = {
-  getStats: defineAction({
-    handler: async () => {
-      try {
-        const statsData = await db.select().from(stats);
-        return statsData;
-      } catch (error) {
-        console.error(`Failed to retrieve data from database: ${error}`);
-        throw new ActionError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Failed to retrieve stats data",
-        });
-      }
-    },
-  }),
-};
-```
+  ```typescript
+  // src/actions/index.ts
+  export const server = {
+    getStats: defineAction({
+      handler: async () => {
+        try {
+          const statsData = await db.select().from(stats);
+          return statsData;
+        } catch (error) {
+          console.error(`Failed to retrieve data from database: ${error}`);
+          throw new ActionError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Failed to retrieve stats data",
+          });
+        }
+      },
+    }),
+  };
+  ```
 
 - **Client-Side Data Fetching & State Management**: I learned how to use TanStack Query in SolidJS to fetch data asynchronously from the server action. This simplified state management by automatically providing loading (`isPending`), error (`isError`), and cached success states.
 
-```typescript
-// src/components/stats/Stats.tsx (simplified)
-const query = useQuery(() => ({
-  queryKey: ["stats"],
-  queryFn: async () => {
-    const { data, error } = await actions.getStats();
-    if (error) throw error;
-    return data;
-  },
-}));
-```
+  ```typescript
+  // src/components/stats/Stats.tsx (simplified)
+  const query = useQuery(() => ({
+    queryKey: ["stats"],
+    queryFn: async () => {
+      const { data, error } = await actions.getStats();
+      if (error) throw error;
+      return data;
+    },
+  }));
+  ```
+
+- **Handling Isomorphic Data Fetching & SSR Warnings (`ActionCalledFromServerError`)**: I learned that when rendering client-side framework components in Astro using `client:load`, the component is pre-rendered on the server (SSR). If the component executes an Astro Action directly inside a render-driven hook like `useQuery`, it triggers an `ActionCalledFromServerError` because Astro Actions called on the server require `Astro.callAction()`. To resolve this for client-only queries, we can change the hydration directive to `client:only="solid-js"` and utilize Astro's native `slot="fallback"` to render static skeleton cards from the server during page load.
 
 ### Continued development
 
@@ -110,14 +112,16 @@ For the next stages of this project, I plan to focus on improving the user exper
 
 ### AI Collaboration
 
-This project was developed with the assistance of an AI coding partner (Antigravity by Google DeepMind) to streamline feature development, discuss code structure, and solve technical challenges.
+This project was developed with the assistance of an AI coding partner (Antigravity by Google DeepMind) to streamline feature development, discuss code structure, solve technical challenges, debug runtime server-client warnings, and compose documentation.
 
 **How I used it:**
 
 - **Database Seeding (`src/db/seed.ts`)**: The AI helped write the database seed script using Drizzle ORM to efficiently insert the initial statistical dashboard data (such as student, school, and teacher statistics) into the Neon PostgreSQL database.
 - **`classList` Utility (`src/utils/class-list.ts`)**: The AI assisted in designing a lightweight custom `classList` helper function to handle conditional and dynamic class names cleanly, without relying on external libraries like `clsx`.
+- **README Documentation (`README.md`)**: The AI assisted in structuring, drafting, and updating the project's documentation, including listing features, summarizing setup processes, and logging code architectures.
+- **Debugging SSR & Hydration (`ActionCalledFromServerError`)**: The AI assisted in diagnosing the Astro Actions server-rendering error and subsequent hydration crashes. We implemented a fix by changing client directive from `client:load` to `client:only` paired with Astro's native `slot="fallback"`.
 
-This collaboration made it easier to manage utility functions and set up backend data, allowing more focus on the layout and frontend logic.
+This collaboration made it easier to manage utility functions, configure backend databases, troubleshoot complex isomorphic rendering boundaries, and maintain comprehensive project documentation.
 
 ## Author
 
