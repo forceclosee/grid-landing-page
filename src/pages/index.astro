@@ -2,6 +2,7 @@
 import Layout from "@layouts/Layout.astro";
 import Hero from "@components/hero/Hero.astro";
 import Stats from "@components/stats/Stats";
+import CardSkeleton from "@components/loaders/CardSkeleton";
 ---
 
 <Layout title="Grid Landing Page | ForceClose">
@@ -9,6 +10,15 @@ import Stats from "@components/stats/Stats";
 		id="main"
 		class="inline-full max-inline-[90rem] content-start lg:content-stretch grid lg:grid-cols-[4fr_5fr] mx-auto">
 		<Hero />
-		<Stats client:load />
+		<Stats client:only="solid-js">
+			<div
+				slot="fallback"
+				class="inline-full max-inline-[26rem] md:max-inline-[50rem] grid md:grid-cols-[1fr_1fr] mx-auto">
+				<CardSkeleton />
+				<CardSkeleton />
+				<CardSkeleton />
+				<CardSkeleton />
+			</div>
+		</Stats>
 	</main>
 </Layout>
