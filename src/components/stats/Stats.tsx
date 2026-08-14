@@ -23,15 +23,8 @@ function StatsContent() {
 			}
 			return data;
 		},
+		refetchOnWindowFocus: false,
 	}));
-
-	// display stat number with compact notation
-	function formatNumber(num: number) {
-		return new Intl.NumberFormat("en-US", {
-			notation: "compact",
-			maximumFractionDigits: 2,
-		}).format(num);
-	}
 
 	// Icon mapping to render icon dynamically based on name
 	const iconMapping: Record<
@@ -64,10 +57,10 @@ function StatsContent() {
 						{(item) => (
 							<Card
 								icon={iconMapping[item.name]}
-								stat={formatNumber(item.stat)}
+								rawStat={item.stat}
 								name={item.name}
 								description={item.description}
-								haveX={item.name === "Graduation lift"}
+								haveXSuffix={item.name === "Graduation lift"}
 							/>
 						)}
 					</For>
@@ -76,6 +69,7 @@ function StatsContent() {
 		</div>
 	);
 }
+
 const queryClient = new QueryClient();
 
 export default function Stats() {
