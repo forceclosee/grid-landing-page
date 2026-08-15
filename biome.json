@@ -25,6 +25,9 @@
 			},
 			"suspicious": {
 				"noDuplicatedSpreadProps": "on"
+			},
+			"style": {
+				"noDescendingSpecificity": "off"
 			}
 		},
 		"domains": {
