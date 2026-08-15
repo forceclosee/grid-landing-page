@@ -4,7 +4,7 @@ import {
 	QueryClientProvider,
 	useQuery,
 } from "@tanstack/solid-query";
-import { Switch, Match, For, Index } from "solid-js";
+import { For, Index, ErrorBoundary, Suspense } from "solid-js";
 import type { JSX, Component } from "solid-js";
 import { Plus, Sparkle, ArrowRight, TrendingUp } from "lucide-solid";
 
@@ -12,6 +12,8 @@ import { classList } from "@utils/class-list";
 
 import Card from "./Card";
 import CardSkeleton from "@components/loaders/CardSkeleton";
+
+const queryClient = new QueryClient();
 
 function StatsContent() {
 	const query = useQuery(() => ({
@@ -24,6 +26,7 @@ function StatsContent() {
 			return data;
 		},
 		refetchOnWindowFocus: false,
+		throwOnError: true,
 	}));
 
 	// Icon mapping to render icon dynamically based on name
@@ -45,14 +48,28 @@ function StatsContent() {
 					? "place-content-center py-8 border-border lg:border-e"
 					: "md:grid-cols-[1fr_1fr]",
 			)}>
-			<Switch>
-				<Match when={query.isPending}>
-					<Index each={Array(4)}>{() => <CardSkeleton />}</Index>
-				</Match>
-				<Match when={query.isError}>
-					<div class="text-red-300">{query.error?.message}</div>
-				</Match>
-				<Match when={query.isSuccess}>
+			<ErrorBoundary
+				// fallback on error state
+				fallback={(err, reset) => (
+					<div class="justify-items-center gap-8 grid">
+						<p class="text-red-200">{err.message}</p>
+						<button
+							type="button"
+							class="inline-block bg-black/30 hover:bg-black/40 px-4 py-2 rounded-lg active:scale-95 transition-[scale] duration-200 cursor-pointer squircle"
+							onClick={() => {
+								queryClient.resetQueries({ queryKey: ["stats"] });
+								setTimeout(() => {
+									reset();
+								}, 0);
+							}}>
+							Try again
+						</button>
+					</div>
+				)}>
+				<Suspense
+					// fallback on pending state
+					fallback={<Index each={Array(4)}>{() => <CardSkeleton />}</Index>}>
+					{/* render stats data on succes state */}
 					<For each={query.data}>
 						{(item) => (
 							<Card
@@ -64,13 +81,11 @@ function StatsContent() {
 							/>
 						)}
 					</For>
-				</Match>
-			</Switch>
+				</Suspense>
+			</ErrorBoundary>
 		</div>
 	);
 }
-
-const queryClient = new QueryClient();
 
 export default function Stats() {
 	return (
