@@ -53,9 +53,11 @@ This is a solution to the [Time tracking dashboard challenge on Frontend Mentor]
 
 ### What I learned
 
-During this project, I learned how to build a robust server-client bridge for data fetching using Astro Actions, Drizzle ORM, and TanStack Solid Query:
+During this project, I gained hands-on experience bridging server-side databases with client-side reactivity, mastering asynchronous state management, resolving isomorphic rendering warnings, and optimizing user experience by preventing layout and animation flashes on initial page load:
 
-- **Server-Side Database Querying with Drizzle ORM**: I learned how to fetch data securely from Neon database using Drizzle ORM on the server, wrapping it inside an Astro Action to prevent exposing sensitive credentials to the client.
+- **Server-Side Database Querying with Drizzle ORM**
+
+  I learned how to fetch data securely from Neon database using Drizzle ORM on the server, wrapping it inside an Astro Action to prevent exposing sensitive credentials to the client.
 
   ```typescript
   // src/actions/index.ts
@@ -77,7 +79,9 @@ During this project, I learned how to build a robust server-client bridge for da
   };
   ```
 
-- **Client-Side Data Fetching & State Management**: I learned how to use TanStack Query in SolidJS to fetch data asynchronously from the server action. This simplified state management by automatically providing loading (`isPending`), error (`isError`), and cached success states.
+- **Client-Side Data Fetching & State Management**
+
+  I learned how to use TanStack Query in SolidJS to fetch data asynchronously from the server action. This simplified state management by automatically providing loading (`isPending`), error (`isError`), and cached success states.
 
   ```typescript
   // src/components/stats/Stats.tsx (simplified)
@@ -91,14 +95,36 @@ During this project, I learned how to build a robust server-client bridge for da
   }));
   ```
 
-- **Handling Isomorphic Data Fetching & SSR Warnings (`ActionCalledFromServerError`)**: I learned that when rendering client-side framework components in Astro using `client:load`, the component is pre-rendered on the server (SSR). If the component executes an Astro Action directly inside a render-driven hook like `useQuery`, it triggers an `ActionCalledFromServerError` because Astro Actions called on the server require `Astro.callAction()`. To resolve this for client-only queries, we can change the hydration directive to `client:only="solid-js"` and utilize Astro's native `slot="fallback"` to render static skeleton cards from the server during page load.
+- **Handling Isomorphic Data Fetching & SSR Warnings (`ActionCalledFromServerError`)**
+
+  I learned that when rendering client-side framework components in Astro using `client:load`, the component is pre-rendered on the server (SSR). If the component executes an Astro Action directly inside a render-driven hook like `useQuery`, it triggers an `ActionCalledFromServerError` because Astro Actions called on the server require `Astro.callAction()`. To resolve this for client-only queries, we can change the hydration directive to `client:only="solid-js"` and utilize Astro's native `slot="fallback"` to render static skeleton cards from the server during page load.
+
+- **Preventing FOUC (Flash of Un-animated Content)**
+
+  Elements are pre-rendered on the server and painted instantly by the browser. However, when client-side animation engines (like GSAP) manipulate their initial state (e.g., opacity or translate), a brief "flash" of the final content occurs before JavaScript loads. To fix this, I implemented a progressive enhancement approach using a lightweight inline script in the layout `<head>` and a custom Tailwind CSS v4 `@utility`:
+
+  ```html
+  <!-- Layout.astro -->
+  <script is:inline>
+    document.documentElement.classList.add("animate-init");
+  </script>
+  ```
+
+  ```css
+  /* global.css */
+  @utility animate-target {
+    .animate-init & {
+      @apply opacity-0;
+    }
+  }
+  ```
+
+  This ensures that elements are only hidden on load if JavaScript is active, preventing FOUC while keeping content accessible for SEO crawlers and users with JS disabled.
 
 ### Continued development
 
 For the next stages of this project, I plan to focus on improving the user experience, adding interactive database mutations, and polishing UI animations:
 
-- **Skeleton Loaders**: Replace the current basic loading spinner with dynamic skeleton loader cards to improve the perceived loading speed and UI smoothness.
-- **GSAP Animations**: Incorporate the GreenSock Animation Platform (GSAP) to create high-performance entrance animations and micro-interactions for the dashboard components.
 - **Database Mutations**: Add an interface/form to input new statistics, using Astro Actions alongside TanStack Query's mutations to dynamically write data back to the Neon PostgreSQL database.
 - **Real-Time Data Polling**: Configure TanStack Query to automatically refetch data at set intervals to simulate live, real-time metrics.
 
