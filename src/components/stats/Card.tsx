@@ -42,15 +42,19 @@ export default function Card(props: Props) {
 			const mm = gsap.matchMedia();
 
 			// fade in animation all card content
-			gsap.from(".content", {
-				autoAlpha: 0,
-				duration: 1.5,
-				ease: "power3.out",
-				scrollTrigger: {
-					trigger: cardRef,
-					start: "top 60%",
+			gsap.fromTo(
+				".content",
+				{ autoAlpha: 0 },
+				{
+					autoAlpha: 1,
+					duration: 1.5,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: cardRef,
+						start: "top 60%",
+					},
 				},
-			});
+			);
 
 			// no preference: count up animation stat number
 			mm.add("(prefers-reduced-motion: no-preference)", () => {
@@ -92,15 +96,17 @@ export default function Card(props: Props) {
 			ref={cardRef}
 			class="min-block-[20.5rem] grid grid-cols-[1fr_auto] grid-rows-[1fr_auto_auto] hover:bg-white/5 px-6 py-6 border-border border-x md:odd:border-e-0 md:nth-3:border-be-0 lg:odd:border-s-0 not-last-of-type:border-be transition-all duration-200 cursor-pointer"
 			{...restProps}>
-			<coreProps.icon class="block-auto inline-7 content" />
-			<p class="text-4xl content">
+			<coreProps.icon class="block-auto inline-7 animate-target content" />
+			<p class="text-4xl animate-target content">
 				<span ref={statRef}>{formatNumber(coreProps.rawStat)}</span>
 				<Show when={coreProps.haveXSuffix}>
 					<span>×</span>
 				</Show>
 			</p>
-			<p class="col-span-2 content">{coreProps.name}</p>
-			<p class="col-span-2 text-sm content">{coreProps.description}</p>
+			<p class="col-span-2 animate-target content">{coreProps.name}</p>
+			<p class="col-span-2 text-sm animate-target content">
+				{coreProps.description}
+			</p>
 		</div>
 	);
 }

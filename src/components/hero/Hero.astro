@@ -2,9 +2,9 @@
 	id="hero"
 	class="flex flex-col justify-center items-center lg:items-start px-fluid-6-12 py-13.5 border-be border-border lg:border-be-0 lg:border-e lg:border-s text-center lg:text-start">
 	<div class="max-inline-[26rem]">
-		<h1 class="title">A classroom for every child.</h1>
+		<h1 class="animate-target title">A classroom for every child.</h1>
 		<!-- ubah lagi mbs -->
-		<p class="mbs-fluid-6-10 description">
+		<p class="animate-target mbs-fluid-6-10 description">
 			We fund the schools, train the teachers, and measure what works — so every
 			child we reach today becomes a graduate tomorrow.
 		</p>
@@ -19,6 +19,8 @@ const heroSection = document.querySelector("#hero");
 const mm = gsap.matchMedia();
 
 if (heroSection) {
+	gsap.set(".title", { autoAlpha: 1 });
+
 	// ANIMATION NO PREFERENCE
 	mm.add(
 		"(prefers-reduced-motion: no-preference)",
@@ -41,13 +43,10 @@ if (heroSection) {
 				})
 
 				// description - opacity and translate y
-				.from(
+				.fromTo(
 					".description",
-					{
-						autoAlpha: 0,
-						y: 50,
-						duration: 1.5,
-					},
+					{ autoAlpha: 0, y: 50 },
+					{ autoAlpha: 1, y: 0, duration: 1.5 },
 					"-=0.3",
 				);
 		},
@@ -61,18 +60,13 @@ if (heroSection) {
 			const tl = gsap.timeline();
 			tl
 				// title - opacity only
-				.from(".title", {
-					autoAlpha: 0,
-					duration: 1,
-				})
+				.from(".title", { autoAlpha: 0, duration: 1 })
 
 				// description - opacity only
-				.from(
+				.fromTo(
 					".description",
-					{
-						autoAlpha: 0,
-						duration: 1.5,
-					},
+					{ autoAlpha: 0 },
+					{ autoAlpha: 1, duration: 1.5 },
 					"-=0.5",
 				);
 		},
