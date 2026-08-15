@@ -12,7 +12,7 @@ export default function Skeleton(props: Props) {
 		<div
 			class={classList(
 				props.class,
-				"bg-linear-to-r from-gray-400/60 via-gray-500/60 to-gray-400/60 bg-size-[200%_100%] wave",
+				"bg-linear-to-r from-gray-400/60 via-gray-500/60 to-gray-400/60 bg-size-[200%_100%] wave transition-all duration-75 transition-discrete starting:opacity-0",
 				props.shape === "square" ? "rounded-lg squircle" : "rounded-full",
 			)}
 			style={{
