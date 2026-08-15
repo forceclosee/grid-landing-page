@@ -3,17 +3,47 @@ import Layout from "@layouts/Layout.astro";
 ---
 
 <Layout title="Page Not Found">
-	<main class="flex flex-col justify-center items-center p-8 text-center">
-		<span class="text-4xl">404</span>
-		<h1 class="mbs-8">Page Not Found</h1>
-		<p class="mbs-12">
+	<main
+		id="main-404"
+		class="flex flex-col justify-center items-center p-8 text-center">
+		<span class="text-4xl content">404</span>
+		<h1 class="mbs-8 content">Page Not Found</h1>
+		<p class="mbs-12 content">
 			The page you are looking for doesn't exist. Click button bellow to go to
 			the homepage
 		</p>
 		<a
-			class="inline-block bg-black/30 hover:bg-black/40 px-4 py-2 rounded-lg active:scale-95 transition-all duration-200 squircle mbs-8"
+			class="inline-block bg-black/30 hover:bg-black/40 px-4 py-2 rounded-lg active:scale-95 transition-[scale] duration-200 squircle mbs-8 content"
 			href="/"
 			>Back To Homepage</a
 		>
 	</main>
 </Layout>
+
+<script>
+import { gsap } from "@utils/gsap";
+
+const Main404 = document.querySelector("#main-404");
+
+const mm = gsap.matchMedia();
+
+if (Main404) {
+	mm.add(
+		{
+			noPreference: "(prefers-reduced-motion: no-preference)",
+			reduceMotion: "(prefers-reduced-motion: reduce)",
+		},
+		(context) => {
+			const { reduceMotion } = context.conditions || {};
+
+			gsap.from(".content", {
+				opacity: 0,
+				y: reduceMotion ? 0 : 50,
+				ease: "power1.out",
+				stagger: 0.2,
+			});
+		},
+		Main404,
+	);
+}
+</script>
