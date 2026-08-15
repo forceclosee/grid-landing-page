@@ -43,7 +43,7 @@ export default function Card(props: Props) {
 
 			// fade in animation all card content
 			gsap.from(".content", {
-				opacity: 0,
+				autoAlpha: 0,
 				duration: 1.5,
 				ease: "power3.out",
 				scrollTrigger: {
@@ -52,7 +52,7 @@ export default function Card(props: Props) {
 				},
 			});
 
-			// count up animation stat number
+			// no preference: count up animation stat number
 			mm.add("(prefers-reduced-motion: no-preference)", () => {
 				const stat = { val: 0 };
 
