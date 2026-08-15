@@ -1,11 +1,82 @@
 <section
+	id="hero"
 	class="flex flex-col justify-center items-center lg:items-start px-fluid-6-12 py-13.5 border-be border-border lg:border-be-0 lg:border-e lg:border-s text-center lg:text-start">
 	<div class="max-inline-[26rem]">
-		<h1>A classroom for every child.</h1>
+		<h1 class="title">A classroom for every child.</h1>
 		<!-- ubah lagi mbs -->
-		<p class="mbs-fluid-6-10">
+		<p class="mbs-fluid-6-10 description">
 			We fund the schools, train the teachers, and measure what works — so every
 			child we reach today becomes a graduate tomorrow.
 		</p>
 	</div>
 </section>
+
+<script>
+import { gsap, SplitText } from "@utils/gsap";
+
+const heroSection = document.querySelector("#hero");
+
+const mm = gsap.matchMedia();
+
+if (heroSection) {
+	// ANIMATION NO PREFERENCE
+	mm.add(
+		"(prefers-reduced-motion: no-preference)",
+		() => {
+			const tl = gsap.timeline();
+
+			const split = SplitText.create(".title", {
+				type: "words",
+				mask: "words",
+			});
+
+			tl
+				// title - split, opacity, and translate
+				.from(split.words, {
+					y: 100,
+					x: 50,
+					autoAlpha: 0,
+					stagger: 0.15,
+					onComplete: () => split.revert(),
+				})
+
+				// description - opacity and translate y
+				.from(
+					".description",
+					{
+						autoAlpha: 0,
+						y: 50,
+						duration: 1.5,
+					},
+					"-=0.3",
+				);
+		},
+		heroSection,
+	);
+
+	// ANIMATION REDUCED MOTION
+	mm.add(
+		"(prefers-reduced-motion: reduce)",
+		() => {
+			const tl = gsap.timeline();
+			tl
+				// title - opacity only
+				.from(".title", {
+					autoAlpha: 0,
+					duration: 1,
+				})
+
+				// description - opacity only
+				.from(
+					".description",
+					{
+						autoAlpha: 0,
+						duration: 1.5,
+					},
+					"-=0.5",
+				);
+		},
+		heroSection,
+	);
+}
+</script>
