@@ -1,6 +1,6 @@
-# Frontend Mentor - Time tracking dashboard solution
+# Frontend Mentor - Grid landing page solution
 
-This is a solution to the [Time tracking dashboard challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/time-tracking-dashboard-UIQ7167Jw). It features a responsive layout powered by CSS Grid and fluid typography, serverless database integration with Neon and Drizzle ORM, and client-side state management using SolidJS with TanStack Query.
+This is a solution to the [Grid landing page challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/grid-landing-page). It features a responsive layout powered by CSS Grid and fluid typography, serverless database integration with Neon and Drizzle ORM, and client-side state management using SolidJS with TanStack Query.
 
 ## Table of contents
 
@@ -28,8 +28,6 @@ This is a solution to the [Time tracking dashboard challenge on Frontend Mentor]
 - **Refined Micro-interactions:** Features custom hover and focus states, including smooth underline transitions and delayed hamburger icon animations.
 
 ### Screenshot
-
-<!-- isi screenshot -->
 
 ![](./public/screenshot.png)
 
