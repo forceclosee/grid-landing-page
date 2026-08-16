@@ -95,6 +95,18 @@ During this project, I gained hands-on experience bridging server-side databases
   }));
   ```
 
+- **Prefetching and Isomorphic State Syncing (TanStack Query Hydration)**
+
+  I learned how to pre-render data on the server by fetching it in the Astro frontmatter (`Astro.callAction`) and passing it to the SolidJS component as `initialData`. To prevent duplicate network requests on client mount and avoid resetting card loading animations, I configured a dynamic `staleTime` based on the presence of initial data:
+
+  ```typescript
+  // src/components/stats/Stats.tsx (simplified)
+  initialData: props.initialStatsData,
+  staleTime: props.initialStatsData ? Infinity : 0,
+  ```
+
+  This ensures that when prefetching succeeds, the client immediately uses the fresh server-rendered data without refetching. If the prefetch is for some reason fails, the client fallback triggers a fresh fetch at runtime in the browser.
+
 - **Handling Isomorphic Data Fetching & SSR Warnings (`ActionCalledFromServerError`)**
 
   I learned that when rendering client-side framework components in Astro using `client:load`, the component is pre-rendered on the server (SSR). If the component executes an Astro Action directly inside a render-driven hook like `useQuery`, it triggers an `ActionCalledFromServerError` because Astro Actions called on the server require `Astro.callAction()`. To resolve this for client-only queries, we can change the hydration directive to `client:only="solid-js"` and utilize Astro's native `slot="fallback"` to render static skeleton cards from the server during page load.
