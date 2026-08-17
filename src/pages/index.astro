@@ -2,7 +2,11 @@
 import Layout from "@layouts/Layout.astro";
 import Hero from "@components/hero/Hero.astro";
 import Stats from "@components/stats/Stats";
+import { actions } from "astro:actions";
 import CardSkeleton from "@components/loaders/CardSkeleton";
+
+// prefetch data on server side at request time
+const { data } = await Astro.callAction(actions.getStats, {});
 ---
 
 <Layout title="Grid Landing Page | ForceClose">
@@ -10,7 +14,11 @@ import CardSkeleton from "@components/loaders/CardSkeleton";
 		id="main"
 		class="inline-full max-inline-[90rem] content-start lg:content-stretch grid lg:grid-cols-[4fr_5fr] mx-auto">
 		<Hero />
-		<Stats client:only="solid-js">
+
+		{null /* hydrate Stats component dynamically based on prefetch status */}
+		{data 
+		? <Stats client:load data={data}/> 
+		: <Stats client:only="solid-js">
 			<div
 				slot="fallback"
 				class="inline-full max-inline-[26rem] md:max-inline-[50rem] grid md:grid-cols-[1fr_1fr] mx-auto">
@@ -19,6 +27,6 @@ import CardSkeleton from "@components/loaders/CardSkeleton";
 				<CardSkeleton />
 				<CardSkeleton />
 			</div>
-		</Stats>
+		</Stats>}
 	</main>
 </Layout>

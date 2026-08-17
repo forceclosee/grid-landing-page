@@ -1,6 +1,6 @@
-# Frontend Mentor - Time tracking dashboard solution
+# Frontend Mentor - Grid landing page solution
 
-This is a solution to the [Time tracking dashboard challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/time-tracking-dashboard-UIQ7167Jw). It features a responsive layout powered by CSS Grid and fluid typography, serverless database integration with Neon and Drizzle ORM, and client-side state management using SolidJS with TanStack Query.
+This is a solution to the [Grid landing page challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/grid-landing-page). It features a responsive layout powered by CSS Grid and fluid typography, serverless database integration with Neon and Drizzle ORM, and client-side state management using SolidJS with TanStack Query.
 
 ## Table of contents
 
@@ -28,8 +28,6 @@ This is a solution to the [Time tracking dashboard challenge on Frontend Mentor]
 - **Refined Micro-interactions:** Features custom hover and focus states, including smooth underline transitions and delayed hamburger icon animations.
 
 ### Screenshot
-
-<!-- isi screenshot -->
 
 ![](./public/screenshot.png)
 
@@ -94,6 +92,18 @@ During this project, I gained hands-on experience bridging server-side databases
     },
   }));
   ```
+
+- **Prefetching and Isomorphic State Syncing (TanStack Query Hydration)**
+
+  I learned how to pre-render data on the server by fetching it in the Astro frontmatter (`Astro.callAction`) and passing it to the SolidJS component as `initialData`. To prevent duplicate network requests on client mount and avoid resetting card loading animations, I configured a dynamic `staleTime` based on the presence of initial data:
+
+  ```typescript
+  // src/components/stats/Stats.tsx (simplified)
+  initialData: props.initialStatsData,
+  staleTime: props.initialStatsData ? Infinity : 0,
+  ```
+
+  This ensures that when prefetching succeeds, the client immediately uses the fresh server-rendered data without refetching. If the prefetch is for some reason fails, the client fallback triggers a fresh fetch at runtime in the browser.
 
 - **Handling Isomorphic Data Fetching & SSR Warnings (`ActionCalledFromServerError`)**
 
